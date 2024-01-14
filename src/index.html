@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List</title>
+</head>
+<body>
+    <!-- Static Html Structure -->
+    <div id="header">
+        <div id="logo">
+            <h1 aria-label="To Do">TO DO</h1>
+            <!-- CSS image will be displayed -->
+        </div>
+        <button type="button" id="add-new">
+            add new to do
+        </button>
+        <div id="sorter">
+            <button type="button" data-filter-name="by-priority" class="static-button">
+                by priority
+            </button>
+            <button type="button" data-filter-name="by-date" class="static-button">
+                by date
+            </button>
+        </div>
+    </div>
+    <div id="sidebar">
+        <div id="todo-menu">
+            <ul>
+                <li>
+                    <button type="button"  data-filter-name="today" class="static-button">
+                        today
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-filter-name="upcoming" class="static-button">
+                        upcoming
+                    </button>
+                </li>
+                <li>
+                    <button type="button"  data-filter-name="unscheduled" class="static-button">
+                        unscheduled
+                    </button>
+                </li>
+                <li>
+                    <button type="button" data-filter-name="completed" class="static-button">
+                        completed
+                    </button>
+                </li>
+            </ul>
+        </div>
+        <div id="category">
+            <div>
+                <h2>category</h2>
+                <button id="add-new-category" type="button" aria-label="Add New Category">
+                    <!-- CSS image will be displayed -->
+                </button>
+            </div>
+                <!-- Pop up category entry -->
+                <form id="category-form" action="" class="hidden">
+                    <div>
+                        <label for="new-category">enter new category</label>
+                        <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters.">
+                    </div>
+                    <div>
+                        <button id="add-category" type="submit">add category</button>
+                        <button id="cancel-category" type="button">cancel</button>
+                    </div>
+                </form>
+            <div id="category-list">
+                <!-- The list of category will be displayed -->      
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div id="todo-heading">
+            <h2 data-filter-name="">today</h2>
+        </div>
+        <div id="todo-list">
+                <!-- The list of todos will be displayed -->
+        </div>
+    </div>
+
+    <!-- Pop-up Todo Form -->
+    <div id="add-todo-modal">
+        <form id="todo-form" action="" class="hidden">
+            <div>
+                <label for="task-title"></label>
+                <input type="text" id="task-title" name="title" placeholder="Task Title" required>
+            </div>
+            <div>
+                <label for="details"></label>
+                <input type="text" id="details" name="details" placeholder="Details">
+            </div>
+            <div>
+                <label for="due-date" class="sub-items">due date</label>
+                <input type="date" id="due-date" name="dueDate">
+                <label for="priority" class="sub-items">priority</label>
+                <select name="priority" id="priority">
+                    <option value="none" selected>none</option>
+                    <option value="high">high</option>
+                    <option value="medium">medium</option>
+                    <option value="low">low</option>
+                </select>
+                <label for="category-option" class="sub-items">category</label>
+                <select name="category-option" id="category-option">
+                    <!-- <option value="inbox" selected>Inbox</option> -->
+                </select>
+            </div>
+            <div>
+                <button id="clear" type="button">clear</button>
+                <button id="add" type="submit">add task</button>
+                <button id="close" type="button">close</button>
+            </div>
+        </form>
+    </div>
+
+     <!-- Pop-up Edit Todo Form-->
+     <div id="edit-modal">
+         <form id="edit-form" data-id="" action="" class="hidden">
+            <div>
+                <label for="edit-title"></label>
+                <input type="text" id="edit-title" name="title" placeholder="Task Title" required>
+            </div>
+            <div>
+                <label for="edit-details"></label>
+                <input type="text" id="edit-details" name="details" placeholder="Details">
+            </div>
+            <div>
+                <label for="edit-date" class="sub-items">due date</label>
+                <input type="date" id="edit-date" name="dueDate">
+                <label for="edit-priority" class="sub-items">priority</label>
+                <select name="priority" id="edit-priority">
+                    <option value="none" selected>none</option>
+                    <option value="high">high</option>
+                    <option value="medium">medium</option>
+                    <option value="low">low</option>
+                </select>
+                <label for="edit-category" class="sub-items">category</label>
+                <select name="category-option" id="edit-category">
+                    <!-- <option value="inbox" selected>Inbox</option> -->
+                </select>
+            </div>
+            <div>
+                <button id="clear-edit" type="button">clear</button>
+                <button id="update" type="submit">update task</button>
+                <button id="close-edit" type="button">close</button>
+            </div>
+             </form>
+     </div>
+
+
+    <!-- Todo list template -->
+    <template id="list-template">
+        <li class="todo-item" data-id="">
+            <input type="checkbox" class="todo-checkbox">
+            <h3 class="todo-title"></h3>
+            <p class="todo-details"></p>
+            <span class="todo-date"></span>
+            <button class="edit-todo" aria-label="Edit To-Do">
+                <!-- CSS image will be displayed -->
+            </button>
+            <button class="delete-todo" aria-label="Delete To-Do">
+                <!-- CSS image will be displayed -->
+            </button>
+        </li>
+    </template>
+    
+</body>
+</html>
