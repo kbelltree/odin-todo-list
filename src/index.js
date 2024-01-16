@@ -15,17 +15,18 @@ const categoryCancelBtn = document.getElementById('cancel-category');
 
 // Header related
 const sorterWrapper = document.getElementById('sorter');
-const addNewTodoBtn = document.getElementById('add-new');
 
 // Sidebar menu related 
 const categoryListWrapper = document.getElementById('category-list');
 const sidebar = document.getElementById('sidebar');
+const addNewTodoBtn = document.getElementById('add-new');
 
 // Main related
 const todoListWrapper = document.getElementById('todo-list');
 
 // Edit todo form related 
 const editForm = document.getElementById('edit-form');
+const editFormCancelBtn = document.getElementById('cancel-edit');
 
 // State Management variable
 let currentFilterTitle = '';
@@ -132,7 +133,6 @@ addNewTodoBtn.addEventListener('click', () => {
 const addCategoryBtn = document.getElementById('add-category');
 // add eventListener that displays the form on click 
 
-
 todoListWrapper.addEventListener('click', (e) => {
     const todoItem = e.target.closest('.todo-item');
     const todoId = parseInt(todoItem.dataset.id, 10); 
@@ -190,6 +190,8 @@ editForm.addEventListener('submit', (e) => {
     refreshTodoList(todoListWrapper, getModifiedTodos(currentFilterTitle));
     e.target.reset();   
 });
+
+editFormCancelBtn.addEventListener('click', () => resetAndHideForm('#edit-form'));
 
 // On load, display default page 'today' with today's todos objects, and display all existing categories from categories array
 document.addEventListener('DOMContentLoaded', () => {
