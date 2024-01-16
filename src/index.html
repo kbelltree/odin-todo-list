@@ -24,60 +24,62 @@
             </button>
         </div>
     </div>
-    <div id="sidebar">
-        <div id="todo-menu">
-            <ul>
-                <li>
-                    <button type="button"  data-filter-name="today" class="static-button">
-                        today
-                    </button>
-                </li>
-                <li>
-                    <button type="button" data-filter-name="upcoming" class="static-button">
-                        upcoming
-                    </button>
-                </li>
-                <li>
-                    <button type="button"  data-filter-name="unscheduled" class="static-button">
-                        unscheduled
-                    </button>
-                </li>
-                <li>
-                    <button type="button" data-filter-name="completed" class="static-button">
-                        completed
-                    </button>
-                </li>
-            </ul>
-        </div>
-        <div id="category">
-            <div>
-                <h2>category</h2>
-                <button id="add-new-category" type="button" aria-label="Add New Category">
-                    <!-- CSS image will be displayed -->
-                </button>
+    <div id="content">
+        <div id="sidebar">
+            <div id="todo-menu">
+                <ul>
+                    <li>
+                        <button type="button"  data-filter-name="today" class="static-button">
+                            today
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-filter-name="upcoming" class="static-button">
+                            upcoming
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button"  data-filter-name="unscheduled" class="static-button">
+                            unscheduled
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button" data-filter-name="completed" class="static-button">
+                            completed
+                        </button>
+                    </li>
+                </ul>
             </div>
-                <!-- Pop up category entry -->
-                <form id="category-form" action="" class="hidden">
-                    <div>
-                        <label for="new-category">enter new category</label>
-                        <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters.">
-                    </div>
-                    <div>
-                        <button id="add-category" type="submit">add category</button>
-                        <button id="cancel-category" type="button">cancel</button>
-                    </div>
-                </form>
-            <div id="category-list">
-                <!-- The list of category will be displayed -->      
+            <div id="category">
+                <div>
+                    <h2>category</h2>
+                    <button id="add-new-category" type="button" aria-label="Add New Category">
+                        <!-- CSS image will be displayed -->
+                    </button>
+                </div>
+                    <!-- Pop up category entry -->
+                    <form id="category-form" action="" class="hidden">
+                        <div>
+                            <label for="new-category">enter new category</label>
+                            <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters.">
+                        </div>
+                        <div>
+                            <button id="add-category" type="submit">add category</button>
+                            <button id="cancel-category" type="button">cancel</button>
+                        </div>
+                    </form>
+                <div id="category-list">
+                    <!-- The list of category will be displayed -->
+                </div>
             </div>
         </div>
-    </div>
-    <div id="main">
-        <div id="todo-heading">
-            <h2 data-filter-name="">today</h2>
-        </div>
-        <div id="todo-list">
-                <!-- The list of todos will be displayed -->
+        <div id="main">
+            <div id="todo-heading">
+                <h2 data-filter-name="">today</h2>
+            </div>
+            <div id="todo-list">
+                    <!-- The list of todos will be displayed -->
+            </div>
         </div>
     </div>
 
@@ -141,10 +143,9 @@
                     <!-- <option value="inbox" selected>Inbox</option> -->
                 </select>
             </div>
-            <div>
-                <button id="clear-edit" type="button">clear</button>
+            <div> 
                 <button id="update" type="submit">update task</button>
-                <button id="close-edit" type="button">close</button>
+                <button id="cancel-edit" type="button">cancel</button>
             </div>
              </form>
      </div>
@@ -166,5 +167,8 @@
         </li>
     </template>
     
+    <div id="footer">
+        created by Keiko.S 2024
+    </div>
 </body>
 </html>
