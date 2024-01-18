@@ -1,8 +1,9 @@
-import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getModifiedTodos } from './todoDataManager.js';
+import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos } from './todoDataManager.js';
 
 import { overwriteTodoHeading, refreshTodoList, updateCategoryList } from './pageComponents.js';
 
 import { getFormDataObject, resetForm, resetAndHideForm, getCategoryInputValue, populateCategorySelect, populateEditForm, getEditTodoId } from './todoFormComponents.js';
+
 
 // Todo form related 
 const todoForm = document.getElementById('todo-form');
@@ -40,7 +41,7 @@ todoForm.addEventListener('submit', (e) => {
     
     addTodo(newTodo);   
     
-    console.log(newTodo);
+    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
    
     e.target.reset();
 });
@@ -84,14 +85,14 @@ categoryListWrapper.addEventListener('click', (e) => {
         deleteCategory(currentFilterTitle); 
         resetCategoryToInbox(currentFilterTitle);
         updateCategoryList(categoryListWrapper, shallowCopyCategories());
-        refreshTodoList(todoListWrapper, getModifiedTodos(currentFilterTitle));
+        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
         
         currentFilterTitle = '';
         overwriteTodoHeading(currentFilterTitle);
     }    
 })
 
-function sharedEventListener (e) {
+sidebar.addEventListener ('click', (e) => {
     const classList = e.target.classList;
     currentFilterTitle = e.target.dataset.filterName;
 
@@ -100,27 +101,25 @@ function sharedEventListener (e) {
         return; 
     }
     
-    // if (classList.contains('static-button')|| classList.contains('dynamic-button')) {
-    //     // const buttonName = e.target.dataset.filterName; 
-    //     currentFilterTitle = e.target.dataset.filterName; 
-        
-    //     console.log(`sidebar menu button clicked: ${currentFilterTitle}`);
-        
-    //     overwriteTodoHeading(currentFilterTitle);
-
-    //     updateTodoListByMenuName(todoListWrapper, currentFilterTitle);
-    // }
     if (classList.contains('static-button') || classList.contains('dynamic-button')) {
         
         overwriteTodoHeading(currentFilterTitle);
-        refreshTodoList(todoListWrapper, getModifiedTodos(currentFilterTitle));
+        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     }
-}
+})
 
-// Add event to the parent elements that responds click on filter or sort buttons 
-sidebar.addEventListener('click', sharedEventListener);
-
-sorterWrapper.addEventListener('click', sharedEventListener);
+sorterWrapper.addEventListener('click', (e) => {
+    
+    if (e.target.tagName !== 'BUTTON') {
+        console.log('Not a click on buttons.')
+        return; 
+    }
+    const sorterName = e.target.dataset.filterName; 
+    const filteredArray = getFilteredTodos(currentFilterTitle);
+    console.log(`sorter: ${sorterName}`);
+    
+    refreshTodoList(todoListWrapper, sortFilteredTodos(filteredArray, sorterName));
+})
 
 addNewTodoBtn.addEventListener('click', () => {
     // TODO: Display Todo form
@@ -174,7 +173,7 @@ todoListWrapper.addEventListener('click', (e) => {
         
         deleteTodoById(todoId);
         console.log(currentFilterTitle);
-        refreshTodoList(todoListWrapper, getModifiedTodos(currentFilterTitle));
+        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     }
 } )
 
@@ -187,7 +186,7 @@ editForm.addEventListener('submit', (e) => {
     
     // Update the object with new formData
     editTodoById(todoIdOnEdit, formData);
-    refreshTodoList(todoListWrapper, getModifiedTodos(currentFilterTitle));
+    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     e.target.reset();   
 });
 
@@ -195,7 +194,8 @@ editFormCancelBtn.addEventListener('click', () => resetAndHideForm('#edit-form')
 
 // On load, display default page 'today' with today's todos objects, and display all existing categories from categories array
 document.addEventListener('DOMContentLoaded', () => {
-    refreshTodoList(todoListWrapper, getModifiedTodos('today'));
+    currentFilterTitle = 'today';
+    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     updateCategoryList(categoryListWrapper, shallowCopyCategories());
     populateCategorySelect(shallowCopyCategories(), 'category-option');
 }, { once: true });

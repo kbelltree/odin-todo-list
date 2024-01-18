@@ -12,20 +12,20 @@
             <h1 aria-label="To Do">TO DO</h1>
             <!-- CSS image will be displayed -->
         </div>
-        <button type="button" id="add-new">
-            add new to do
-        </button>
         <div id="sorter">
-            <button type="button" data-filter-name="by-priority" class="static-button">
+            <button type="button" data-filter-name="by-priority">
                 by priority
             </button>
-            <button type="button" data-filter-name="by-date" class="static-button">
+            <button type="button" data-filter-name="by-date">
                 by date
             </button>
         </div>
     </div>
     <div id="content">
         <div id="sidebar">
+            <button type="button" id="add-new">
+                add new to do
+            </button>
             <div id="todo-menu">
                 <ul>
                     <li>
@@ -51,14 +51,14 @@
                 </ul>
             </div>
             <div id="category">
-                <div>
+                <div class="category-heading">
                     <h2>category</h2>
                     <button id="add-new-category" type="button" aria-label="Add New Category">
                         <!-- CSS image will be displayed -->
                     </button>
                 </div>
                     <!-- Pop up category entry -->
-                    <form id="category-form" action="" class="hidden">
+                    <form id="category-form" action="">
                         <div>
                             <label for="new-category">enter new category</label>
                             <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters.">

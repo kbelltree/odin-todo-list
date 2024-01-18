@@ -118,10 +118,6 @@ export class Todo {
 let allTodos = loadAllTodos(ALL_TODOS_KEY, Todo); 
 let categories = loadCategories(CATEGORIES_KEY);// 'inbox' is defaulted from localStorage
 
-// Store filtered todos for dynamic response. 
-let filteredTodos = []; 
-
-
 export function addTodo(todoInstance) {
     allTodos.push(todoInstance);
     console.log(`addTodo: ${allTodos[allTodos.length-1]}`)
@@ -168,37 +164,39 @@ function filterTodosByCategory(categoryName) {
 
 
 function getTodaysTodos() {
-    filteredTodos = filterTodosByDueDate(getTodaysDate());
-    return filteredTodos;  
+    const arrayReturned = filterTodosByDueDate(getTodaysDate());
+    return arrayReturned;  
 }
 
 function getUpcomingTodos() {
-    filteredTodos = filterTodosByAfterTodaysDate(); 
-    return filteredTodos;
+    const arrayReturned = filterTodosByAfterTodaysDate(); 
+    return arrayReturned;
 }
 
 function getUnscheduledTodos() {
-    const filteredTodos = filterTodosByDueDate('');
-    return filteredTodos;  
+    const arrayReturned = filterTodosByDueDate('');
+    console.log(`unscheduled clicked`)
+    return arrayReturned;  
 }
 
 function getCompletedTodos() {
-    const filteredTodos = allTodos.filter(todo => todo.completed);
-    return filteredTodos; 
-}
-
-function getSortedTodosByPriority() {
-    return filteredTodos.sort(sortAscendingByPriority);
-}
-
-function getSortedTodosByDueDate() {
-    return filteredTodos.sort(sortTodosByDueDate);
+    const arrayReturned = allTodos.filter(todo => todo.completed);
+    return arrayReturned; 
 }
 
 function getTodosByCategory(categoryName) {
-    filteredTodos = filterTodosByCategory(categoryName);
-    return filteredTodos;
+    const arrayReturned = filterTodosByCategory(categoryName);
+    return arrayReturned;
 }
+
+function getSortedTodosByPriority(filteredArray) {
+    return filteredArray.sort(sortAscendingByPriority);
+}
+
+function getSortedTodosByDueDate(filteredArray) {
+    return filteredArray .sort(sortTodosByDueDate);
+}
+
 
 export function deleteTodoById(todoId) {
     const index = findTodoIndexById(todoId);
@@ -284,8 +282,8 @@ export function shallowCopyCategories() {
     return [...categories];
 }
 
-export function getModifiedTodos(modifierType) {
-    switch (modifierType) {
+export function getFilteredTodos(filterType) {
+    switch (filterType) {
         case 'today': 
             return getTodaysTodos();
         case 'upcoming':
@@ -294,11 +292,19 @@ export function getModifiedTodos(modifierType) {
             return getUnscheduledTodos();
         case 'completed':
             return getCompletedTodos();   
-        case 'by-priority':
-            return getSortedTodosByPriority();
-        case 'by-date':
-            return getSortedTodosByDueDate();
         default: 
-            return getTodosByCategory(modifierType);
+            return getTodosByCategory(filterType);
+    }
+}
+
+export function sortFilteredTodos(filteredArray, sortType) {
+    switch (sortType) {
+        case 'by-priority':
+            return getSortedTodosByPriority(filteredArray);
+        case 'by-date':
+            return getSortedTodosByDueDate(filteredArray);
+        default: 
+            console.log('No matching sorter found.');
+            return; 
     }
 }
