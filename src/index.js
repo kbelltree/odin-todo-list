@@ -4,7 +4,6 @@ import { overwriteTodoHeading, refreshTodoList, updateCategoryList } from './pag
 
 import { getFormDataObject, resetForm, resetAndHideForm, getCategoryInputValue, populateCategorySelect, populateEditForm, getEditTodoId } from './todoFormComponents.js';
 
-
 // Todo form related 
 const todoForm = document.getElementById('todo-form');
 const todoFormCloseBtn = document.getElementById('close');
@@ -172,7 +171,6 @@ todoListWrapper.addEventListener('click', (e) => {
         if(!isConfirmed) return;
         
         deleteTodoById(todoId);
-        console.log(currentFilterTitle);
         refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     }
 } )
@@ -195,6 +193,7 @@ editFormCancelBtn.addEventListener('click', () => resetAndHideForm('#edit-form')
 // On load, display default page 'today' with today's todos objects, and display all existing categories from categories array
 document.addEventListener('DOMContentLoaded', () => {
     currentFilterTitle = 'today';
+    overwriteTodoHeading(currentFilterTitle);
     refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
     updateCategoryList(categoryListWrapper, shallowCopyCategories());
     populateCategorySelect(shallowCopyCategories(), 'category-option');
