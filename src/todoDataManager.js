@@ -162,7 +162,6 @@ function filterTodosByCategory(categoryName) {
     return allTodos.filter(todo => todo.category === categoryName);
 }
 
-
 function getTodaysTodos() {
     const arrayReturned = filterTodosByDueDate(getTodaysDate());
     return arrayReturned;  
@@ -181,6 +180,11 @@ function getUnscheduledTodos() {
 
 function getCompletedTodos() {
     const arrayReturned = allTodos.filter(todo => todo.completed);
+    return arrayReturned; 
+}
+
+function getUnfinishedTodos(filteredArray) {
+    const arrayReturned = filteredArray.filter(todo => !todo.completed);
     return arrayReturned; 
 }
 
@@ -285,15 +289,15 @@ export function shallowCopyCategories() {
 export function getFilteredTodos(filterType) {
     switch (filterType) {
         case 'today': 
-            return getTodaysTodos();
+            return getUnfinishedTodos(getTodaysTodos());
         case 'upcoming':
-            return getUpcomingTodos();
+            return getUnfinishedTodos(getUpcomingTodos());
         case 'unscheduled':
-            return getUnscheduledTodos();
+            return getUnfinishedTodos(getUnscheduledTodos());
         case 'completed':
             return getCompletedTodos();   
         default: 
-            return getTodosByCategory(filterType);
+            return getUnfinishedTodos(getTodosByCategory(filterType));
     }
 }
 
