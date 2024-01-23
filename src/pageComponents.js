@@ -36,14 +36,15 @@ function createCategoryMenu(array) {
         const li = document.createElement('li');
         const menuButton = document.createElement('button');
         const deleteButton = document.createElement('button');
-        li.setAttribute('class', 'category-item');
+        li.classList.add('category-item');
         menuButton.setAttribute('type', 'button');
         menuButton.setAttribute('data-filter-name', category); 
-        menuButton.setAttribute('class', 'dynamic-button');
+        menuButton.classList.add('dynamic-button');
         menuButton.textContent = category; 
         deleteButton.setAttribute('type', 'button');
         deleteButton.setAttribute('data-filter-name', category); 
-        deleteButton.setAttribute('class', 'delete-category');
+        deleteButton.classList.add('delete-category');
+        deleteButton.classList.add('button-image');
         deleteButton.setAttribute('aria-label', 'Delete this category');
         
         li.append(menuButton, deleteButton);
