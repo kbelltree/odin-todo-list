@@ -1,10 +1,29 @@
+function getPriorityImage(todoObj) {
+    switch (todoObj.priority) {
+        case 'high':
+            case 'high':
+            return { src: './assets/images/icons8-high-priority-24.png', alt: 'High Priority' };
+        case 'medium':
+            return { src: './assets/images/icons8-medium-priority-24.png', alt: 'Medium Priority' };
+        case 'low':
+            return { src: './assets/images/icons8-low-priority-24.png', alt: 'Low Priority' };
+        case 'none':
+        default:
+            return { src: '', alt: '' }; 
+    }
+}
+
 function formatListToHTML(todo) {
     const template = document.getElementById('list-template');
     const clone = template.content.cloneNode(true);
 
+    const priorityImg = getPriorityImage(todo);
+
     clone.querySelector('.todo-item').dataset.id = todo.id; 
     clone.querySelector('.todo-title').textContent = todo.title; 
     clone.querySelector('.todo-details').textContent = todo.details; 
+    clone.querySelector('.priority-indicator').src = priorityImg.src; 
+    clone.querySelector('.priority-indicator').alt = priorityImg.alt; 
     
     return clone; 
 }
