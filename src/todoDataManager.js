@@ -16,8 +16,8 @@ export class Todo {
     }
 
     set title(text) {
-       if (text.length >= 30) {
-            this._title = text.substring(0, 29) + '...';
+       if (text.length >= 50) {
+            this._title = text.substring(0, 49) + '...';
        } else if (text.trim().length === 0){
             this._title = 'untitled';
        } else {
@@ -154,6 +154,12 @@ function filterTodosByAfterTodaysDate() {
     return allTodos.filter(todo => todo.dueDate > todaysDate);
 }
 
+function filterTodosByBeforeTodaysDate() {
+    const todaysDate = getTodaysDate();
+
+    return allTodos.filter(todo => todo.dueDate !== '' && todo.dueDate < todaysDate);
+}
+
 function filterTodosByDueDate(date) {
     return allTodos.filter(todo => todo.dueDate === date);
 }
@@ -174,13 +180,17 @@ function getUpcomingTodos() {
 
 function getUnscheduledTodos() {
     const arrayReturned = filterTodosByDueDate('');
-    console.log(`unscheduled clicked`)
     return arrayReturned;  
 }
 
 function getCompletedTodos() {
     const arrayReturned = allTodos.filter(todo => todo.completed);
     return arrayReturned; 
+}
+
+function getOverdueTodos() {
+    const arrayReturned = filterTodosByBeforeTodaysDate();
+    return arrayReturned;
 }
 
 function getUnfinishedTodos(filteredArray) {
@@ -236,6 +246,13 @@ export function toggleCompletedById(todoId) {
         } 
         console.log('toggleCompletedById did not find matching todoId.: ' + todoId);
         return false;   
+}
+
+export function getPriorityById(todoId) {
+    const todoObj = findTodoById(todoId);
+        if (todoObj) {
+            return todoObj.priority;
+        };
 }
 
 export function editTodoById(todoId, formData) {
@@ -295,7 +312,9 @@ export function getFilteredTodos(filterType) {
         case 'unscheduled':
             return getUnfinishedTodos(getUnscheduledTodos());
         case 'completed':
-            return getCompletedTodos();   
+            return getCompletedTodos();
+        case 'overdue':
+            return getUnfinishedTodos(getOverdueTodos());
         default: 
             return getUnfinishedTodos(getTodosByCategory(filterType));
     }
