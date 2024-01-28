@@ -1,3 +1,5 @@
+import { format, parseISO } from 'date-fns';
+
 function getPriorityImage(todoObj) {
     switch (todoObj.priority) {
         case 'high':
@@ -13,17 +15,30 @@ function getPriorityImage(todoObj) {
     }
 }
 
+function formatDateForList(todoObj) {
+    const dateString = todoObj.dueDate; 
+    if (dateString === '') {
+        return dateString; 
+    }
+    const parsedDate = parseISO(dateString);
+    const formattedDate = format(parsedDate, 'EEE, MMM d, yyyy');
+
+    return formattedDate; 
+}
+
 function formatListToHTML(todo) {
     const template = document.getElementById('list-template');
     const clone = template.content.cloneNode(true);
 
     const priorityImg = getPriorityImage(todo);
+    const dueDate = formatDateForList(todo);
 
     clone.querySelector('.todo-item').dataset.id = todo.id; 
     clone.querySelector('.todo-title').textContent = todo.title; 
     clone.querySelector('.todo-details').textContent = todo.details; 
     clone.querySelector('.priority-indicator').src = priorityImg.src; 
     clone.querySelector('.priority-indicator').alt = priorityImg.alt; 
+    clone.querySelector('.todo-date').textContent = dueDate; 
     
     return clone; 
 }
