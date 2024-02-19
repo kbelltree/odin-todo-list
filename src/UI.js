@@ -73,18 +73,23 @@ function createCategoryMenu(array) {
         const li = document.createElement('li');
         const menuButton = document.createElement('button');
         const deleteButton = document.createElement('button');
+        
         li.classList.add('category-item');
         menuButton.setAttribute('type', 'button');
         menuButton.setAttribute('data-filter-name', category); 
         menuButton.classList.add('dynamic-button');
         menuButton.textContent = category; 
-        deleteButton.setAttribute('type', 'button');
-        deleteButton.setAttribute('data-filter-name', category); 
-        deleteButton.classList.add('delete-category');
-        deleteButton.classList.add('button-image');
-        deleteButton.setAttribute('aria-label', 'Delete this category');
+        li.appendChild(menuButton);
         
-        li.append(menuButton, deleteButton);
+        if (category !== 'inbox') {
+            deleteButton.setAttribute('type', 'button');
+            deleteButton.setAttribute('data-filter-name', category); 
+            deleteButton.classList.add('delete-category');
+            deleteButton.classList.add('button-image');
+            deleteButton.setAttribute('aria-label', 'Delete this category');
+            li.appendChild(deleteButton);
+        }
+
         ul.appendChild(li);
     })
 
@@ -102,21 +107,21 @@ export function overwriteTodoHeading(filterName) {
     return todoHeading;
 }
 
-export function refreshTodoList(wrapperDiv, array) {   
-    
+export function refreshTodoList(containerId, array) {   
+    const container = document.getElementById(containerId);
     const listsHTML = createTodoList(array);
     console.log('listsHTML:  ' + listsHTML);  
-    clearTodoList(wrapperDiv);
-    wrapperDiv.appendChild(listsHTML);
+    clearTodoList(container);
+    container.appendChild(listsHTML);
 }
 
-export function updateCategoryList(wrapperDiv, array) {
-    
-    clearTodoList(wrapperDiv);
+export function updateCategoryList(containerId, array) {
+    const container = document.getElementById(containerId);
+    clearTodoList(container);
 
     const listsHTML = createCategoryMenu(array);
 
-    wrapperDiv.appendChild(listsHTML);
+    container.appendChild(listsHTML);
 
 }
 
@@ -127,16 +132,18 @@ export function addClassToCompletedTodos(filterTitle) {
     }
 }
 
-export function displayForm(container) {
+export function displayForm(containerId) {
+    const container = document.getElementById(containerId);
     container.setAttribute('style', 'display: block;');
 }
 
-export function closeForm(container) {
+export function closeForm(containerId) {
+    const container = document.getElementById(containerId);
     container.setAttribute('style', 'display: none;');
 }
 
 export function resetForm(formId) {
-    const form = document.querySelector(formId);
+    const form = document.getElementById(formId);
     console.log(form);
     if (form) {
         form.reset();
