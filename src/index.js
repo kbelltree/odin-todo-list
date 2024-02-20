@@ -1,8 +1,4 @@
-import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos } from './todoDataManager.js';
-
-import { overwriteTodoHeading, refreshTodoList, updateCategoryList } from './pageComponents.js';
-
-import { getFormDataObject, resetForm, resetAndHideForm, getCategoryInputValue, populateCategorySelect, populateEditForm, getEditTodoId } from './todoFormComponents.js';
+import { handleTodoFormSubmit, handleTodoFormClose, handleTodoFormClear, handleAddCategoryClick, handleCategoryFormSubmit, handleCategoryFormCancel, handleCategoryDelete, handleFilterTitleClick, handleSortBtnClick, handleAddNewTodoClick, handleTodoListUpdate, handleEditFormSubmit, handleEditFormCancel, loadDefaultContent } from './eventHandlers.js';
 
 // Todo form related 
 const todoForm = document.getElementById('todo-form');
@@ -11,6 +7,7 @@ const todoFormClearBtn = document.getElementById('clear');
 
 // Category form related
 const categoryForm = document.getElementById('category-form');
+const addCategoryBtn = document.getElementById('add-new-category');
 const categoryCancelBtn = document.getElementById('cancel-category');
 
 // Header related
@@ -28,174 +25,30 @@ const todoListWrapper = document.getElementById('todo-list');
 const editForm = document.getElementById('edit-form');
 const editFormCancelBtn = document.getElementById('cancel-edit');
 
-// State Management variable
-let currentFilterTitle = '';
+addNewTodoBtn.addEventListener('click', handleAddNewTodoClick);
 
-todoForm.addEventListener('submit', (e) => {
-    const formData = getFormDataObject(e);
-    
-    console.log('formData: ' + formData.title, formData.details, formData.dueDate, formData.priority, formData.category);
-    
-    const newTodo = new Todo(formData.title, formData.details, formData.dueDate, formData.priority, formData.category);
-    
-    addTodo(newTodo);   
-    
-    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-   
-    e.target.reset();
-});
+todoForm.addEventListener('submit', handleTodoFormSubmit);
 
-todoFormCloseBtn.addEventListener('click', () => resetAndHideForm('#todo-form'));
+todoFormCloseBtn.addEventListener('click', handleTodoFormClose);
 
-todoFormClearBtn.addEventListener('click', () => resetForm('#todo-form'));
+todoFormClearBtn.addEventListener('click', handleTodoFormClear);
 
-categoryForm.addEventListener('submit', (e) => {
-    const categoryValue = getCategoryInputValue(e);
-    
-    // Add new category to categories array
-    if (categoryValue) {
-        addNewCategory(categoryValue);
-       
-        console.log('category array: ' + shallowCopyCategories());  
-    }
+addCategoryBtn.addEventListener('click', handleAddCategoryClick);
 
-    updateCategoryList(categoryListWrapper, shallowCopyCategories());
-    e.target.reset();
-})
+categoryForm.addEventListener('submit', handleCategoryFormSubmit);
 
-categoryCancelBtn.addEventListener('click', () => resetAndHideForm('#category-form'));
+categoryCancelBtn.addEventListener('click', handleCategoryFormCancel);
 
-// Add eventlistener to parent element that handles delete category
-categoryListWrapper.addEventListener('click', (e) => { 
-    // let categoryName = e.target.dataset.filterName; 
-    currentFilterTitle = e.target.dataset.filterName; 
+categoryListWrapper.addEventListener('click', handleCategoryDelete); 
 
-    if (e.target.matches('.delete-category')){
-        
-        if (currentFilterTitle === 'inbox'){
-            alert('This category can not be deleted.')
-            return; 
-        }
+sidebar.addEventListener('click', handleFilterTitleClick);
 
-        const isConfirmed = confirm('Are you sure this category is deleted?');
-        
-        if (!isConfirmed) return; 
+sorterWrapper.addEventListener('click', handleSortBtnClick);
 
-        deleteCategory(currentFilterTitle); 
-        resetCategoryToInbox(currentFilterTitle);
-        updateCategoryList(categoryListWrapper, shallowCopyCategories());
-        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-        
-        currentFilterTitle = '';
-        overwriteTodoHeading(currentFilterTitle);
-    }    
-})
+todoListWrapper.addEventListener('click', handleTodoListUpdate);
 
-sidebar.addEventListener ('click', (e) => {
-    const classList = e.target.classList;
-    currentFilterTitle = e.target.dataset.filterName;
+editForm.addEventListener('submit', handleEditFormSubmit);
 
-    if (!classList || e.target.tagName !== 'BUTTON') {
-        console.log('Not a click on static/dynamic buttons.')
-        return; 
-    }
-    
-    if (classList.contains('static-button') || classList.contains('dynamic-button')) {
-        
-        overwriteTodoHeading(currentFilterTitle);
-        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-    }
-})
+editFormCancelBtn.addEventListener('click', handleEditFormCancel);
 
-sorterWrapper.addEventListener('click', (e) => {
-    
-    if (e.target.tagName !== 'BUTTON') {
-        console.log('Not a click on buttons.')
-        return; 
-    }
-    const sorterName = e.target.dataset.filterName; 
-    const filteredArray = getFilteredTodos(currentFilterTitle);
-    console.log(`sorter: ${sorterName}`);
-    
-    refreshTodoList(todoListWrapper, sortFilteredTodos(filteredArray, sorterName));
-})
-
-addNewTodoBtn.addEventListener('click', () => {
-    // TODO: Display Todo form
-
-    console.log('addNewTodo triggered. categories copy array: ' + shallowCopyCategories())
-    // New category appears on click of the button and open add todo form.  
-    populateCategorySelect(shallowCopyCategories(), 'category-option');
-})
-
-const addCategoryBtn = document.getElementById('add-category');
-// add eventListener that displays the form on click 
-
-todoListWrapper.addEventListener('click', (e) => {
-    const todoItem = e.target.closest('.todo-item');
-    const todoId = parseInt(todoItem.dataset.id, 10); 
-    
-    console.log('todoId retrieved onclick: ' + todoId);
-    
-    // const menuName = document.querySelector('#todo-heading h2').dataset.filterName;
-    
-    if (!todoItem) {
-       console.log('A click is made outside of todoList.');
-       return; 
-    }
-
-    // Completed box 
-    if (e.target.matches('.todo-checkbox')) {
-        toggleCompletedById(todoId);
-        // Add a UI function that strike-through the list responding by boolean
-
-    // Edit button 
-    } else if (e.target.matches('.edit-todo')) {
-        console.log('edit-todo button clicked.');
-        // Display edit form
-
-        console.log('Todo Object:', getTodoById(todoId));
-        
-        // Reflect category box with current categories array values
-        populateCategorySelect(shallowCopyCategories(), 'edit-category');
-
-        // Populate the form with the current todo data
-        populateEditForm(getTodoById(todoId), todoId);
-      
-
-    // Delete button 
-    } else if (e.target.matches('.delete-todo')) {
-        
-        const isConfirmed = confirm('Are you sure it is permanently deleted?');
-        
-        if(!isConfirmed) return;
-        
-        deleteTodoById(todoId);
-        refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-    }
-} )
-
-editForm.addEventListener('submit', (e) => {
-    const formData = getFormDataObject(e);
-    const todoIdOnEdit = getEditTodoId(e);
-    // const menuName = document.querySelector('#todo-heading h2').dataset.filterName;
-
-    console.log('formData and ID: ' + formData.title, formData.details, formData.dueDate, formData.priority, formData.category, formData, todoIdOnEdit);
-    
-    // Update the object with new formData
-    editTodoById(todoIdOnEdit, formData);
-    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-    e.target.reset();   
-});
-
-editFormCancelBtn.addEventListener('click', () => resetAndHideForm('#edit-form'));
-
-// On load, display default page 'today' with today's todos objects, and display all existing categories from categories array
-document.addEventListener('DOMContentLoaded', () => {
-    currentFilterTitle = 'today';
-    overwriteTodoHeading(currentFilterTitle);
-    refreshTodoList(todoListWrapper, getFilteredTodos(currentFilterTitle));
-    updateCategoryList(categoryListWrapper, shallowCopyCategories());
-    populateCategorySelect(shallowCopyCategories(), 'category-option');
-}, { once: true });
-
+document.addEventListener('DOMContentLoaded', loadDefaultContent, { once: true });
