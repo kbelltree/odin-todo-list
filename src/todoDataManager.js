@@ -16,8 +16,8 @@ export class Todo {
     }
 
     set title(text) {
-       if (text.length >= 50) {
-            this._title = text.substring(0, 49) + '...';
+       if (text.trim().length === 0) {
+            this._title = text.substring(0, 49);
        } else if (text.trim().length === 0){
             this._title = 'untitled';
        } else {
@@ -246,13 +246,6 @@ export function toggleCompletedById(todoId) {
         } 
         console.log('toggleCompletedById did not find matching todoId.: ' + todoId);
         return false;   
-}
-
-export function getPriorityById(todoId) {
-    const todoObj = findTodoById(todoId);
-        if (todoObj) {
-            return todoObj.priority;
-        };
 }
 
 export function editTodoById(todoId, formData) {
