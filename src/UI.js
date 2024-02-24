@@ -1,14 +1,18 @@
 import { format, parseISO } from 'date-fns';
 
+import highPriorityImage from './assets/images/icons8-high-priority-24.png';
+import mediumPriorityImage from './assets/images/icons8-medium-priority-24.png';
+import lowPriorityImage from './assets/images/icons8-low-priority-24.png';
+
 function getPriorityImage(todoObj) {
     switch (todoObj.priority) {
         case 'high':
             case 'high':
-            return { src: './assets/images/icons8-high-priority-24.png', alt: 'High Priority' };
+            return { src: highPriorityImage, alt: 'High Priority' };
         case 'medium':
-            return { src: './assets/images/icons8-medium-priority-24.png', alt: 'Medium Priority' };
+            return { src: mediumPriorityImage, alt: 'Medium Priority' };
         case 'low':
-            return { src: './assets/images/icons8-low-priority-24.png', alt: 'Low Priority' };
+            return { src: lowPriorityImage, alt: 'Low Priority' };
         case 'none':
         default:
             return { src: '', alt: '' }; 
