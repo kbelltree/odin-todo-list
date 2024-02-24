@@ -1,4 +1,4 @@
-import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos, getPriorityById } from './todoDataManager.js';
+import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos } from './todoDataManager.js';
 
 import { overwriteTodoHeading, refreshTodoList, updateCategoryList, addClassToCompletedTodos, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm } from './UI.js';
 
