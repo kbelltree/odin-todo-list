@@ -10,7 +10,6 @@
     <div id="header">
         <div id="logo">
             <h1 aria-label="To Do">TO DO</h1>
-            <!-- CSS image will be displayed -->
         </div>
         <div id="sorter">
             <button type="button" data-filter-name="by-priority">
@@ -29,23 +28,39 @@
             <div id="todo-menu">
                 <ul>
                     <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-star</title><path d="M19 19H5V8H19M16 1V3H8V1H6V3H5C3.9 3 3 3.9 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3H18V1M10.88 12H7.27L10.19 14.11L9.08 17.56L12 15.43L14.92 17.56L13.8 14.12L16.72 12H13.12L12 8.56L10.88 12Z" /></svg>
                         <button type="button"  data-filter-name="today" class="static-button">
                             today
                         </button>
                     </li>
                     <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-multiselect</title><path d="M19,19V8H5V19H19M16,1H18V3H19A2,2 0 0,1 21,5V19A2,2 0 0,1 19,21H5C3.89,21 3,20.1 3,19V5C3,3.89 3.89,3 5,3H6V1H8V3H16V1M7,10H9V12H7V10M15,10H17V12H15V10M11,14H13V16H11V14M15,14H17V16H15V14Z" /></svg>
                         <button type="button" data-filter-name="upcoming" class="static-button">
                             upcoming
                         </button>
                     </li>
                     <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>timer-sand-empty</title><path d="M6,2V8H6V8L10,12L6,16V16H6V22H18V16H18V16L14,12L18,8V8H18V2H6M16,16.5V20H8V16.5L12,12.5L16,16.5M12,11.5L8,7.5V4H16V7.5L12,11.5Z" /></svg>
                         <button type="button"  data-filter-name="unscheduled" class="static-button">
                             unscheduled
                         </button>
                     </li>
                     <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>medal</title><path d="M20,2H4V4L9.81,8.36C6.14,9.57 4.14,13.53 5.35,17.2C6.56,20.87 10.5,22.87 14.19,21.66C17.86,20.45 19.86,16.5 18.65,12.82C17.95,10.71 16.3,9.05 14.19,8.36L20,4V2M14.94,19.5L12,17.78L9.06,19.5L9.84,16.17L7.25,13.93L10.66,13.64L12,10.5L13.34,13.64L16.75,13.93L14.16,16.17L14.94,19.5Z" /></svg>
                         <button type="button" data-filter-name="completed" class="static-button">
                             completed
+                        </button>
+                    </li>
+                    <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>calendar-alert</title><path d="M6 1V3H5C3.89 3 3 3.89 3 5V19C3 20.11 3.9 21 5 21H19C20.11 21 21 20.11 21 19V5C21 3.9 20.11 3 19 3H18V1H16V3H8V1H6M5 8H19V19H5V8M11 9V14H13V9H11M11 16V18H13V16H11Z" /></svg>
+                        <button type="button" data-filter-name="overdue" class="static-button">
+                            overdue
+                        </button>
+                    </li>
+                    <li>
+                        <svg class="icon" area-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><title>tray-full</title><path d="M18 5H6V7H18M6 9H18V11H6M2 12H4V17H20V12H22V17A2 2 0 0 1 20 19H4A2 2 0 0 1 2 17M18 13H6V15H18Z" /></svg>
+                        <button type="button" data-filter-name="all" class="static-button">
+                            all
                         </button>
                     </li>
                 </ul>
@@ -53,29 +68,34 @@
             <div id="category">
                 <div class="category-heading">
                     <h2>category</h2>
-                    <button id="add-new-category" type="button" aria-label="Add New Category">
+                    <button id="add-new-category" class="button-image" type="button" aria-label="Add New Category">
                         <!-- CSS image will be displayed -->
                     </button>
                 </div>
                     <!-- Pop up category entry -->
+                <div id="category-form-modal" style="display: none;">
                     <form id="category-form" action="">
                         <div>
                             <label for="new-category">enter new category</label>
-                            <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters.">
+                            <input type="text" id="new-category" name="newCategory" pattern="[A-Za-z0-9]{1,10}" title="Please enter a maximum of 10 alphanumeric characters." required>
                         </div>
-                        <div>
-                            <button id="add-category" type="submit">add category</button>
+                        <div class="category-form-buttons">
+                            <button id="add-category" type="submit">add</button>
                             <button id="cancel-category" type="button">cancel</button>
                         </div>
                     </form>
+                </div>
                 <div id="category-list">
                     <!-- The list of category will be displayed -->
                 </div>
             </div>
+            <p id="credit">
+                <a target="_blank" href="https://icons8.com/icon/86513/todo-list">Todo List</a>, <a target="_blank" href="https://icons8.com/icon/86373/edit">Edit</a>, <a target="_blank" href="https://icons8.com/icon/85081/trash">Trash</a>, <a target="_blank" href="https://icons8.com/icon/85136/high-priority">High Priority</a>, <a target="_blank" href="https://icons8.com/icon/85152/medium-priority">Medium Priority</a>, <a target="_blank" href="https://icons8.com/icon/85143/low-priority">Low Priority</a>, <a target="_blank" href="/Users/keikohickey/Downloads/icons8-plus-24.png">Plus</a> & <a target="_blank" href="https://icons8.com/icon/98/plus-math">Plus Math</a> icons by <a target="_blank" href="https://icons8.com">Icons8</a>, Webpage by <a href="https://github.com/kbelltree" >Keiko S.</a>, 2024. 
+            </p>
         </div>
         <div id="main">
             <div id="todo-heading">
-                <h2 data-filter-name="">today</h2>
+                <h2 data-filter-name=""></h2>
             </div>
             <div id="todo-list">
                     <!-- The list of todos will be displayed -->
@@ -85,33 +105,41 @@
 
     <!-- Pop-up Todo Form -->
     <div id="add-todo-modal">
-        <form id="todo-form" action="" class="hidden">
+        <form id="todo-form" action="">
             <div>
-                <label for="task-title"></label>
-                <input type="text" id="task-title" name="title" placeholder="Task Title" required>
+                <label for="task-title">task title</label>
+                <input type="text" id="task-title" name="title" maxlength="50" required>
+                <span class="guidance">Max 50 characters</span>
             </div>
             <div>
-                <label for="details"></label>
-                <input type="text" id="details" name="details" placeholder="Details">
+                <label for="details">details</label>
+                <input type="text" id="details" name="details" maxlength="200">
+                <span class="guidance">Max 200 characters</span>
             </div>
             <div>
-                <label for="due-date" class="sub-items">due date</label>
-                <input type="date" id="due-date" name="dueDate">
-                <label for="priority" class="sub-items">priority</label>
-                <select name="priority" id="priority">
-                    <option value="none" selected>none</option>
-                    <option value="high">high</option>
-                    <option value="medium">medium</option>
-                    <option value="low">low</option>
-                </select>
-                <label for="category-option" class="sub-items">category</label>
-                <select name="category-option" id="category-option">
-                    <!-- <option value="inbox" selected>Inbox</option> -->
-                </select>
+                <div class="sub-items">
+                    <label for="due-date">due date</label>
+                    <input type="date" id="due-date" name="dueDate">
+                </div>
+                <div class="sub-items">
+                    <label for="priority">priority</label>
+                    <select name="priority" id="priority">
+                        <option value="none" selected>none</option>
+                        <option value="high">high</option>
+                        <option value="medium">medium</option>
+                        <option value="low">low</option>
+                    </select>
+                </div>
+                <div class="sub-items">
+                    <label for="category-option">category</label>
+                    <select name="category-option" id="category-option">
+                        <!-- <option value="inbox" selected>Inbox</option> -->
+                    </select>
+                </div>
             </div>
             <div>
                 <button id="clear" type="button">clear</button>
-                <button id="add" type="submit">add task</button>
+                <button id="add" type="submit">add to do</button>
                 <button id="close" type="button">close</button>
             </div>
         </form>
@@ -119,29 +147,37 @@
 
      <!-- Pop-up Edit Todo Form-->
      <div id="edit-modal">
-         <form id="edit-form" data-id="" action="" class="hidden">
+         <form id="edit-form" data-id="" action="">
             <div>
-                <label for="edit-title"></label>
-                <input type="text" id="edit-title" name="title" placeholder="Task Title" required>
+                <label for="edit-title">edit title</label>
+                <input type="text" id="edit-title" name="title" maxlength="50" required>
+                <span class="guidance">Max 50 characters</span>
             </div>
             <div>
-                <label for="edit-details"></label>
-                <input type="text" id="edit-details" name="details" placeholder="Details">
+                <label for="edit-details">edit details</label>
+                <input type="text" id="edit-details" name="details" maxlength="200">
+                <span class="guidance">Max 200 characters</span>
             </div>
             <div>
-                <label for="edit-date" class="sub-items">due date</label>
-                <input type="date" id="edit-date" name="dueDate">
-                <label for="edit-priority" class="sub-items">priority</label>
-                <select name="priority" id="edit-priority">
-                    <option value="none" selected>none</option>
-                    <option value="high">high</option>
-                    <option value="medium">medium</option>
-                    <option value="low">low</option>
-                </select>
-                <label for="edit-category" class="sub-items">category</label>
-                <select name="category-option" id="edit-category">
-                    <!-- <option value="inbox" selected>Inbox</option> -->
-                </select>
+                <div class="sub-items">
+                    <label for="edit-date">due date</label>
+                    <input type="date" id="edit-date" name="dueDate">
+                </div>
+                <div class="sub-items">
+                    <label for="edit-priority">priority</label>
+                    <select name="priority" id="edit-priority">
+                        <option value="none" selected>none</option>
+                        <option value="high">high</option>
+                        <option value="medium">medium</option>
+                        <option value="low">low</option>
+                    </select>
+                </div>
+                <div class="sub-items">
+                    <label for="edit-category">category</label>
+                    <select name="category-option" id="edit-category">
+                        <!-- <option value="inbox" selected>Inbox</option> -->
+                    </select>
+                </div>
             </div>
             <div> 
                 <button id="update" type="submit">update task</button>
@@ -154,21 +190,23 @@
     <!-- Todo list template -->
     <template id="list-template">
         <li class="todo-item" data-id="">
-            <input type="checkbox" class="todo-checkbox">
-            <h3 class="todo-title"></h3>
-            <p class="todo-details"></p>
-            <span class="todo-date"></span>
-            <button class="edit-todo" aria-label="Edit To-Do">
-                <!-- CSS image will be displayed -->
-            </button>
-            <button class="delete-todo" aria-label="Delete To-Do">
-                <!-- CSS image will be displayed -->
-            </button>
+            <div class="list-contents">
+                <input type="checkbox" class="todo-checkbox">
+                <img class="priority-indicator">
+                <h3 class="todo-title"></h3>
+                <p class="todo-details"></p>
+                <p class="todo-date"></p>
+                <div class="list-buttons">
+                    <button class="edit-todo button-image" aria-label="Edit To-Do">
+                        <!-- CSS images displayed as button -->
+                    </button>
+                    <button class="delete-todo button-image" aria-label="Delete To-Do">
+                        <!-- CSS images displayed as button -->
+                    </button>
+                </div>
+            </div>
         </li>
     </template>
     
-    <div id="footer">
-        created by Keiko.S 2024
-    </div>
 </body>
 </html>
