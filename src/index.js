@@ -1,5 +1,7 @@
 import { handleTodoFormSubmit, handleTodoFormClose, handleTodoFormClear, handleAddCategoryClick, handleCategoryFormSubmit, handleCategoryFormCancel, handleCategoryDelete, handleFilterTitleClick, handleSortBtnClick, handleAddNewTodoClick, handleTodoListUpdate, handleEditFormSubmit, handleEditFormCancel, loadDefaultContent } from './eventHandlers.js';
 
+import './style.css';
+
 // Todo form related 
 const todoForm = document.getElementById('todo-form');
 const todoFormCloseBtn = document.getElementById('close');
