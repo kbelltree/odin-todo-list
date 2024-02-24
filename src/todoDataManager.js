@@ -193,6 +193,10 @@ function getOverdueTodos() {
     return arrayReturned;
 }
 
+function getAllTodosShallowCopy() {
+    return [...allTodos];
+}
+
 function getUnfinishedTodos(filteredArray) {
     const arrayReturned = filteredArray.filter(todo => !todo.completed);
     return arrayReturned; 
@@ -308,6 +312,8 @@ export function getFilteredTodos(filterType) {
             return getCompletedTodos();
         case 'overdue':
             return getUnfinishedTodos(getOverdueTodos());
+        case 'all':
+            return getAllTodosShallowCopy();
         default: 
             return getUnfinishedTodos(getTodosByCategory(filterType));
     }
