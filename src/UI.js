@@ -121,7 +121,6 @@ export function overwriteTodoHeading(filterName) {
 export function refreshTodoList(containerId, array) {   
     const container = document.getElementById(containerId);
     const listsHTML = createTodoList(array);
-    console.log('listsHTML:  ' + listsHTML);  
     clearTodoList(container);
     container.appendChild(listsHTML);
 }
@@ -148,7 +147,7 @@ export function closeForm(containerId) {
 
 export function resetForm(formId) {
     const form = document.getElementById(formId);
-    console.log(form);
+    
     if (form) {
         form.reset();
     }
@@ -156,7 +155,7 @@ export function resetForm(formId) {
 
 export function resetAndHideForm(formId) {
     const form = document.querySelector(formId);
-    console.log(form);
+
     if (form) {
         form.reset();
         form.classList.add('hidden');
@@ -190,7 +189,6 @@ export function populateEditForm(todoObjCopy, todoId) {
      document.getElementById('edit-details').value = todoObjCopy.details; 
      document.getElementById('edit-date').value = todoObjCopy.dueDate;
      document.getElementById('edit-priority').value = todoObjCopy.priority;
-     console.log(`populateEditForm priority & category: ${todoObjCopy.priority} & ${todoObjCopy.category}`);
      document.getElementById('edit-category').value = todoObjCopy.category;
      document.getElementById('edit-form').dataset.id = todoId; 
 }

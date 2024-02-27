@@ -103,9 +103,8 @@ export class Todo {
     }
 
     updateCategory(categoryName) {
-        if(!categories.includes(categoryName)){
-            return;
-        }
+        if(!categories.includes(categoryName)) return;
+
         this.category = categoryName; 
     }
 
@@ -120,7 +119,6 @@ let categories = loadCategories(CATEGORIES_KEY);// 'inbox' is defaulted from loc
 
 export function addTodo(todoInstance) {
     allTodos.push(todoInstance);
-    console.log(`addTodo: ${allTodos[allTodos.length-1]}`)
     saveArray(ALL_TODOS_KEY, allTodos);
     saveTodoId(TODO_ID_COUNTER_KEY, Todo.idCounter);
 }
@@ -218,26 +216,21 @@ function getSortedTodosByDueDate(filteredArray) {
 
 export function deleteTodoById(todoId) {
     const index = findTodoIndexById(todoId);
-    
-    console.log('index: ' + index);
-    
+        
     if (index !== -1) {
         allTodos.splice(index, 1);
         saveArray(ALL_TODOS_KEY, allTodos);
         return true; 
     } 
-    
-    console.log('deleteTodoById did not find matching todoId.: ' + todoId);
-    
+        
     return false; 
 }
 
 export function getTodoById(todoId) {
     const todoObj = findTodoById(todoId);
-    if(todoObj) {
-        console.log(`todoById: ${todoObj}`);
-        return todoObj; 
-    }
+
+    if(todoObj) return todoObj; 
+
     return null;
 }
 
@@ -248,7 +241,7 @@ export function toggleCompletedById(todoId) {
             saveArray(ALL_TODOS_KEY, allTodos); 
             return true; 
         } 
-        console.log('toggleCompletedById did not find matching todoId.: ' + todoId);
+
         return false;   
 }
 
@@ -259,7 +252,7 @@ export function editTodoById(todoId, formData) {
         saveArray(ALL_TODOS_KEY, allTodos);
         return true; 
     }
-    console.log('editTodoByIndex did not find matching Id.');
+
     return false; 
 }
 
@@ -281,7 +274,7 @@ export function deleteCategory(categoryName) {
         saveArray(CATEGORIES_KEY, categories);
         return true; 
     }
-    console.log('deleteCategory did not find matching category name: ' + categoryName);
+
     return false;
 }
 

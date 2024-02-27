@@ -20,7 +20,6 @@ function getFormDataObject(e) {
 
 function getCategoryInputValue(e) {
     e.preventDefault();
-
     const newCategory = document.querySelector('#new-category').value;
 
     // Prevent white space or empty entry from being passed as new category
@@ -28,24 +27,20 @@ function getCategoryInputValue(e) {
         console.log('empty entry, ignored.')
         return; 
     } else {
-        console.log('new category: ' + newCategory);
         return newCategory.toLowerCase();
     }    
 }
 
 function getEditTodoId(e) {
     e.preventDefault();
-    
     const todoId = parseInt(e.target.dataset.id, 10); 
 
     return todoId; 
 }
 
 function displayEditForm(todoId) {
-    console.log('edit-todo button clicked.');
     // Display edit form
     displayForm('edit-modal');
-    console.log('Todo Object:', getTodoById(todoId));
     
     // Reflect category box with current categories array values
     populateCategorySelect(shallowCopyCategories(), 'edit-category');
@@ -77,6 +72,7 @@ function refreshUIAfterDeleteCategory(categoryName, currentFilterTitle) {
     if (currentFilterTitle === categoryName) {
         setCurrentFilterTitle('');  
     } 
+
     const filterTitleAfterDelete = getCurrentFilterTitle();
     overwriteTodoHeading(filterTitleAfterDelete);
     refreshTodoList('todo-list', getFilteredTodos(filterTitleAfterDelete));    
@@ -85,7 +81,6 @@ function refreshUIAfterDeleteCategory(categoryName, currentFilterTitle) {
 export function handleAddNewTodoClick() {
     // TODO: Display Todo form
     displayForm('add-todo-modal');
-    console.log('addNewTodo triggered. categories copy array: ' + shallowCopyCategories());
 
     // New category appears on click of the button and open add todo form.  
     populateCategorySelect(shallowCopyCategories(), 'category-option');
@@ -93,9 +88,6 @@ export function handleAddNewTodoClick() {
 
 export function handleTodoFormSubmit(e) {
     const formData = getFormDataObject(e);
-    
-    console.log('formData: ' + formData.title, formData.details, formData.dueDate, formData.priority, formData.category);
-    
     const newTodo = new Todo(formData.title, formData.details, formData.dueDate, formData.priority, formData.category);
     
     addTodo(newTodo);   
@@ -113,7 +105,6 @@ export function handleTodoFormClear() {
 }
 
 export function handleAddCategoryClick() {
-    console.log('currentFilterTitle on addCategoryBtn click: ' + getCurrentFilterTitle());
     resetForm('category-form');
     displayForm('category-form-modal');
 }
@@ -124,11 +115,8 @@ export function handleCategoryFormSubmit(e) {
     // Add new category to categories array
     if (categoryValue) {
         addNewCategory(categoryValue);
-       
-        console.log('category array: ' + shallowCopyCategories());  
     }
 
-    console.log('currentFilterTitle on category form submit: ' + getCurrentFilterTitle());
     updateCategoryList('category-list', shallowCopyCategories());
     e.target.reset();
     closeForm('category-form-modal');
@@ -147,10 +135,8 @@ export function handleCategoryDelete(e) {
 
     const categoryName = e.target.dataset.filterName; 
     const currentFilterTitle = getCurrentFilterTitle();
-    console.log('category delete button clicked, currentFilterTitle: ' + currentFilterTitle);
 
     updateDataAfterDeleteCategory(categoryName);
-
     refreshUIAfterDeleteCategory(categoryName, currentFilterTitle);
 }
 
@@ -182,7 +168,6 @@ export function handleSortBtnClick(e) {
     const currentFilterTitle = getCurrentFilterTitle();
     const sorterName = e.target.dataset.filterName; 
     const filteredArray = getFilteredTodos(currentFilterTitle);
-    console.log(`sorter: ${sorterName}`);
     const sortedArray = sortFilteredTodos(filteredArray, sorterName);
 
     refreshTodoList('todo-list', sortedArray);
@@ -198,9 +183,6 @@ export function handleTodoListUpdate(e) {
     }
 
     const todoId = parseInt(todoItem.dataset.id, 10); 
-    
-    console.log('todoId retrieved onclick: ' + todoId);
-
     const currentFilterTitle = getCurrentFilterTitle();
     
     // Completed box 
@@ -225,13 +207,10 @@ export function handleEditFormSubmit(e) {
     const formData = getFormDataObject(e);
     const todoIdOnEdit = getEditTodoId(e);
     const currentFilterTitle = getCurrentFilterTitle();
-    
-    console.log('formData and ID: ' + formData.title, formData.details, formData.dueDate, formData.priority, formData.category, formData, todoIdOnEdit);
-    
+        
     // Update the object with new formData
     editTodoById(todoIdOnEdit, formData);
     
-    console.log('currentFilterTitle on submit: ' + currentFilterTitle)
     refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
     e.target.reset();   
     closeForm('edit-modal');
