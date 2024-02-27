@@ -1,6 +1,6 @@
 import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos } from './todoDataManager.js';
 
-import { overwriteTodoHeading, refreshTodoList, updateCategoryList, addClassToCompletedTodos, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm } from './UI.js';
+import { overwriteTodoHeading, refreshTodoList, updateCategoryList, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm } from './UI.js';
 
 import { getCurrentFilterTitle, setCurrentFilterTitle } from './stateManager.js';
 
@@ -60,11 +60,6 @@ function updateDataAfterDeleteTodo(todoId) {
     if(!isConfirmed) return;
         
     deleteTodoById(todoId); 
-}
-
-function refreshUIAfterUpdateTodo(currentFilterTitle) {
-    refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
-    addClassToCompletedTodos(currentFilterTitle); 
 }
 
 function updateDataAfterDeleteCategory(categoryName) {
@@ -174,7 +169,6 @@ export function handleFilterTitleClick(e) {
         const currentFilterTitle = getCurrentFilterTitle();
         overwriteTodoHeading(currentFilterTitle);
         refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
-        addClassToCompletedTodos(currentFilterTitle);
     }
 }
 
@@ -192,7 +186,6 @@ export function handleSortBtnClick(e) {
     const sortedArray = sortFilteredTodos(filteredArray, sorterName);
 
     refreshTodoList('todo-list', sortedArray);
-    addClassToCompletedTodos(currentFilterTitle);
 }
 
 // Handler attached to a parent element
@@ -214,7 +207,7 @@ export function handleTodoListUpdate(e) {
     if (e.target.matches('.todo-checkbox')) {
         setTimeout(() => {
             toggleCompletedById(todoId);
-            refreshUIAfterUpdateTodo(currentFilterTitle);
+            refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
         }, 150);
 
     // Edit button 
@@ -224,7 +217,7 @@ export function handleTodoListUpdate(e) {
     // Delete button 
     } else if (e.target.matches('.delete-todo')) {
         updateDataAfterDeleteTodo(todoId);
-        refreshUIAfterUpdateTodo(currentFilterTitle);
+        refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
     }
 }
 
