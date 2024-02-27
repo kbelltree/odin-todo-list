@@ -30,14 +30,21 @@ function formatDateForList(todoObj) {
     return formattedDate; 
 }
 
+function markCompletedTodos(todoObj) {
+    const completed = todoObj.completed;
+    if (completed) return 'completed';  
+}
+
 function formatListToHTML(todo) {
     const template = document.getElementById('list-template');
     const clone = template.content.cloneNode(true);
 
     const priorityImg = getPriorityImage(todo);
     const dueDate = formatDateForList(todo);
+    const completed = markCompletedTodos(todo);
 
     clone.querySelector('.todo-item').dataset.id = todo.id; 
+    clone.querySelector('.todo-item').classList.add(completed);
     clone.querySelector('.todo-title').textContent = todo.title; 
     clone.querySelector('.todo-details').textContent = todo.details; 
     clone.querySelector('.priority-indicator').src = priorityImg.src; 
@@ -127,13 +134,6 @@ export function updateCategoryList(containerId, array) {
 
     container.appendChild(listsHTML);
 
-}
-
-export function addClassToCompletedTodos(filterTitle) {
-    if (filterTitle === 'completed') {
-        const todoItems = document.querySelectorAll('.todo-item');
-        todoItems.forEach(todoItem => todoItem.classList.add('completed'));
-    }
 }
 
 export function displayForm(containerId) {
