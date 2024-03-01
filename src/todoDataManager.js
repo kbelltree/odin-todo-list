@@ -210,7 +210,7 @@ function getSortedTodosByPriority(filteredArray) {
 }
 
 function getSortedTodosByDueDate(filteredArray) {
-    return filteredArray .sort(sortTodosByDueDate);
+    return filteredArray.sort(sortTodosByDueDate);
 }
 
 
@@ -312,14 +312,24 @@ export function getFilteredTodos(filterType) {
     }
 }
 
-export function sortFilteredTodos(filteredArray, sortType) {
+export function sortFilteredTodos(filteredArray, sortType, sortOrder) {
+    let sortedArray;
+
     switch (sortType) {
         case 'by-priority':
-            return getSortedTodosByPriority(filteredArray);
+            sortedArray = getSortedTodosByPriority(filteredArray);
+            break; 
         case 'by-date':
-            return getSortedTodosByDueDate(filteredArray);
+            sortedArray = getSortedTodosByDueDate(filteredArray);
+            break; 
         default: 
             console.log('No matching sorter found.');
             return; 
     }
+    
+    if (sortOrder === 'descending') {
+        sortedArray.reverse();
+    }
+
+    return sortedArray; 
 }

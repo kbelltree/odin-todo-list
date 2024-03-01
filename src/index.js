@@ -1,4 +1,4 @@
-import { handleTodoFormSubmit, handleTodoFormClose, handleTodoFormClear, handleAddCategoryClick, handleCategoryFormSubmit, handleCategoryFormCancel, handleCategoryDelete, handleFilterTitleClick, handleSortBtnClick, handleAddNewTodoClick, handleTodoListUpdate, handleEditFormSubmit, handleEditFormCancel, loadDefaultContent } from './eventHandlers.js';
+import { handleTodoFormSubmit, handleTodoFormClose, handleTodoFormClear, handleAddCategoryClick, handleCategoryFormSubmit, handleCategoryFormCancel, handleCategoryDelete, handleFilterTitleClick, handleSortOptionSelect, handleAddNewTodoClick, handleTodoListUpdate, handleEditFormSubmit, handleEditFormCancel, loadDefaultContent } from './eventHandlers.js';
 
 import './style.css';
 
@@ -13,7 +13,8 @@ const addCategoryBtn = document.getElementById('add-new-category');
 const categoryCancelBtn = document.getElementById('cancel-category');
 
 // Header related
-const sorterWrapper = document.getElementById('sorter');
+const prioritySorter = document.getElementById('priority-sorter');
+const dateSorter = document.getElementById('date-sorter');
 
 // Sidebar menu related 
 const categoryListWrapper = document.getElementById('category-list');
@@ -45,7 +46,9 @@ categoryListWrapper.addEventListener('click', handleCategoryDelete);
 
 sidebar.addEventListener('click', handleFilterTitleClick);
 
-sorterWrapper.addEventListener('click', handleSortBtnClick);
+prioritySorter.addEventListener('change', handleSortOptionSelect);
+
+dateSorter.addEventListener('change', handleSortOptionSelect);
 
 todoListWrapper.addEventListener('click', handleTodoListUpdate);
 

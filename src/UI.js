@@ -107,10 +107,12 @@ function createCategoryMenu(array) {
     return ul; 
 }
 
+export function resetSelectElementToDefault(selectElementId, defaultValue) {
+    const selectElement = document.getElementById(selectElementId);
+    selectElement.value = defaultValue; 
+}
+
 export function overwriteTodoHeading(filterName) {
-    if (filterName === 'by-priority' || filterName === 'by-date'){
-       return; 
-    }
     const todoHeading = document.querySelector('#todo-heading h2');
     todoHeading.textContent = filterName; 
     todoHeading.dataset.filterName = filterName;

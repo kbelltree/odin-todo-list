@@ -1,6 +1,6 @@
 import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTodoById, addNewCategory, deleteCategory, resetCategoryToInbox, shallowCopyCategories, getFilteredTodos, sortFilteredTodos } from './todoDataManager.js';
 
-import { overwriteTodoHeading, refreshTodoList, updateCategoryList, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm } from './UI.js';
+import { overwriteTodoHeading, refreshTodoList, updateCategoryList, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm, resetSelectElementToDefault } from './UI.js';
 
 import { getCurrentFilterTitle, setCurrentFilterTitle } from './stateManager.js';
 
@@ -76,6 +76,26 @@ function refreshUIAfterDeleteCategory(categoryName, currentFilterTitle) {
     const filterTitleAfterDelete = getCurrentFilterTitle();
     overwriteTodoHeading(filterTitleAfterDelete);
     refreshTodoList('todo-list', getFilteredTodos(filterTitleAfterDelete));    
+}
+
+function resetOtherSelectOnChange(sorterName, optionValue) {
+    if (optionValue === '') return; 
+
+    switch (sorterName) {
+        case 'by-priority':
+            resetSelectElementToDefault('date-sorter', '');
+            break; 
+        case 'by-date':
+            resetSelectElementToDefault('priority-sorter', '');
+            break;
+        default:
+            return; 
+    }
+}
+
+function resetSortToDefault(){
+    resetSelectElementToDefault('priority-sorter', '');
+    resetSelectElementToDefault('date-sorter', '');
 }
 
 export function handleAddNewTodoClick() {
@@ -155,23 +175,20 @@ export function handleFilterTitleClick(e) {
         const currentFilterTitle = getCurrentFilterTitle();
         overwriteTodoHeading(currentFilterTitle);
         refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
+        resetSortToDefault();
     }
 }
 
-// Handler attached to a parent element
-export function handleSortBtnClick(e) {
-    if (e.target.tagName !== 'BUTTON') {
-        console.log('Not a click on buttons.')
-        return; 
-    }
-
-    const currentFilterTitle = getCurrentFilterTitle();
+export function handleSortOptionSelect(e) {
     const sorterName = e.target.dataset.filterName; 
-    const filteredArray = getFilteredTodos(currentFilterTitle);
-    const sortedArray = sortFilteredTodos(filteredArray, sorterName);
+    const order = e.target.value; 
 
+    resetOtherSelectOnChange(sorterName, order);
+    const currentFilterTitle = getCurrentFilterTitle();
+    const filteredArray = getFilteredTodos(currentFilterTitle);
+    const sortedArray = sortFilteredTodos(filteredArray, sorterName, order);
     refreshTodoList('todo-list', sortedArray);
-}
+} 
 
 // Handler attached to a parent element
 export function handleTodoListUpdate(e) {
@@ -210,7 +227,6 @@ export function handleEditFormSubmit(e) {
         
     // Update the object with new formData
     editTodoById(todoIdOnEdit, formData);
-    
     refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
     e.target.reset();   
     closeForm('edit-modal');
