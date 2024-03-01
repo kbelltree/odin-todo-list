@@ -167,18 +167,23 @@ input {
   background-repeat: no-repeat;
 }
 
-#sorter button {
-  margin-left: 0.5rem; 
-  padding: 0.5rem 1rem; 
+#sorter select {
+  -webkit-appearance: none; 
+  appearance: none;
+  background-color: #fff;
+  border: 2px solid var(--header-button-base);
+  padding: 0.25rem;
   border-radius: 10px; 
-  background-color: var(--header-button-base);
-  color: white; 
+  font-family: 'PT Sans';
+  font-weight: 400;
+  font-size: 1rem; 
+  text-align: center;
+  color: var(--form-base-color);
+  cursor: pointer;
 }
 
-#sorter button:active {
-  background-color: var(--header-button-hover-active);
-  color: white; 
-  transform: scale(0.95);
+#sorter select:focus {
+  outline: 3px solid var(--header-button-hover-active);
 }
 
 #content {
@@ -557,7 +562,6 @@ button#add-category:active {
   background-color: var(--header-button-hover-active);
   color: white; 
 }
-
 
 /* Utility Styling */
 
