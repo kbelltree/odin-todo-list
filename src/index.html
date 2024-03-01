@@ -12,12 +12,17 @@
             <h1 aria-label="To Do">TO DO</h1>
         </div>
         <div id="sorter">
-            <button type="button" data-filter-name="by-priority">
-                by priority
-            </button>
-            <button type="button" data-filter-name="by-date">
-                by date
-            </button>
+            <span>sort by:</span>
+            <select id="priority-sorter" data-filter-name="by-priority" aria-label="Sort by priority">
+                <option value="" selected disabled>priority (select order)</option>
+                <option value="ascending">high to low priority</option>
+                <option value="descending">low to high priority</option>
+            </select>
+            <select id="date-sorter" data-filter-name="by-date" aria-label="Sort by date">
+                <option value="" selected disabled>date (select order)</option>
+                <option value="ascending">early date first</option>
+                <option value="descending">later date first</option>
+            </select>
         </div>
     </div>
     <div id="content">
