@@ -2,7 +2,7 @@ import { Todo, addTodo, getTodoById, deleteTodoById, toggleCompletedById, editTo
 
 import { overwriteTodoHeading, refreshTodoList, updateCategoryList, displayForm, closeForm, resetForm, populateCategorySelect, populateEditForm, resetSelectElementToDefault } from './UI.js';
 
-import { getCurrentFilterTitle, setCurrentFilterTitle } from './stateManager.js';
+import { getCurrentFilterTitle, getCurrentSortOrder, getCurrentSortType, setCurrentFilterTitle, setSortType, setSortOrder } from './stateManager.js';
 
 function getFormDataObject(e) {
     e.preventDefault();
@@ -68,6 +68,7 @@ function updateDataAfterDeleteCategory(categoryName) {
 
 function refreshUIAfterDeleteCategory(categoryName, currentFilterTitle) {
     updateCategoryList('category-list', shallowCopyCategories());
+
     // in case currentFilterTitle is the same value as categoryName, reset to none. 
     if (currentFilterTitle === categoryName) {
         setCurrentFilterTitle('');  
@@ -95,7 +96,9 @@ function resetOtherSelectOnChange(sorterName, optionValue) {
 
 function resetSortToDefault(){
     resetSelectElementToDefault('priority-sorter', '');
+    setSortType('');
     resetSelectElementToDefault('date-sorter', '');
+    setSortOrder('');
 }
 
 export function handleAddNewTodoClick() {
@@ -109,9 +112,14 @@ export function handleAddNewTodoClick() {
 export function handleTodoFormSubmit(e) {
     const formData = getFormDataObject(e);
     const newTodo = new Todo(formData.title, formData.details, formData.dueDate, formData.priority, formData.category);
+    const currentFilterTitle = getCurrentFilterTitle();
+    const sorterName = getCurrentSortType(); 
+    const order = getCurrentSortOrder(); 
     
     addTodo(newTodo);   
-    refreshTodoList('todo-list', getFilteredTodos(getCurrentFilterTitle()));
+    const filteredArray = getFilteredTodos(currentFilterTitle);
+    const sortedArray = sortFilteredTodos(filteredArray, sorterName, order);
+    refreshTodoList('todo-list', sortedArray); 
     e.target.reset();
 };
 
@@ -180,8 +188,10 @@ export function handleFilterTitleClick(e) {
 }
 
 export function handleSortOptionSelect(e) {
-    const sorterName = e.target.dataset.filterName; 
-    const order = e.target.value; 
+    setSortType(e.target.dataset.filterName);
+    setSortOrder(e.target.value);
+    const sorterName = getCurrentSortType(); 
+    const order = getCurrentSortOrder(); 
 
     resetOtherSelectOnChange(sorterName, order);
     const currentFilterTitle = getCurrentFilterTitle();
@@ -201,6 +211,8 @@ export function handleTodoListUpdate(e) {
 
     const todoId = parseInt(todoItem.dataset.id, 10); 
     const currentFilterTitle = getCurrentFilterTitle();
+    const sorterName = getCurrentSortType();
+    const order = getCurrentSortOrder();
     
     // Completed box 
     if (e.target.matches('.todo-checkbox')) {
@@ -216,7 +228,9 @@ export function handleTodoListUpdate(e) {
     // Delete button 
     } else if (e.target.matches('.delete-todo')) {
         updateDataAfterDeleteTodo(todoId);
-        refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
+        const filteredArray = getFilteredTodos(currentFilterTitle);
+        const sortedArray = sortFilteredTodos(filteredArray, sorterName, order);
+        refreshTodoList('todo-list', sortedArray);
     }
 }
 
@@ -224,10 +238,14 @@ export function handleEditFormSubmit(e) {
     const formData = getFormDataObject(e);
     const todoIdOnEdit = getEditTodoId(e);
     const currentFilterTitle = getCurrentFilterTitle();
+    const sorterName = getCurrentSortType();
+    const order = getCurrentSortOrder();
         
     // Update the object with new formData
     editTodoById(todoIdOnEdit, formData);
-    refreshTodoList('todo-list', getFilteredTodos(currentFilterTitle));
+    const filteredArray = getFilteredTodos(currentFilterTitle);
+    const sortedArray = sortFilteredTodos(filteredArray, sorterName, order);
+    refreshTodoList('todo-list', sortedArray);
     e.target.reset();   
     closeForm('edit-modal');
 }

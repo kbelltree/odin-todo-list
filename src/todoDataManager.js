@@ -322,6 +322,8 @@ export function sortFilteredTodos(filteredArray, sortType, sortOrder) {
         case 'by-date':
             sortedArray = getSortedTodosByDueDate(filteredArray);
             break; 
+        case '':
+            return filteredArray; 
         default: 
             console.log('No matching sorter found.');
             return; 
