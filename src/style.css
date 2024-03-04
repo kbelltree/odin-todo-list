@@ -520,9 +520,11 @@ input[type="date"] {
   font-size: 1rem;
 }
 
-#todo-form input[type="text"], 
-#edit-form input[type="text"] {
-  background-color: transparent; 
+#task-title, 
+#details, 
+#edit-title, 
+#edit-details {
+  background: none; 
   border: none; 
   outline: none;
   border-bottom: 1px dotted var(--form-base-color);
