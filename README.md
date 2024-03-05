@@ -2,7 +2,7 @@
 ## The Odin Project: Todo List
 
 <div align="center">
-    <a href="https://kbelltree.github.io/">
+    <a href="https://kbelltree.github.io/odin-todo-list/">
         <img src="To-do-app-k-belltree-2024.gif" alt="To-do list application snapshot by Keiko S. 2024" width=60% height=60%>
     </a>
 </div>
